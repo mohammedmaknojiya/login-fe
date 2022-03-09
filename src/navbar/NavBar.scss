@@ -1,0 +1,10 @@
+.navbar-container {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background-color: aqua;
+  div {
+    margin-right: 20px;
+    cursor: pointer;
+  }
+}
