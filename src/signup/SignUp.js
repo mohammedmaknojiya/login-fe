@@ -1,15 +1,27 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+
+import { signUpUser } from "../api/auth_api";
+import { useAuth } from "../authContext/AuthContext";
 
 import "./SignUp.scss";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const auth = useAuth();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(email, password);
+    const { data: userData } = await signUpUser({ email, password });
+    if (userData.authToken) {
+      localStorage.setItem("userData", JSON.stringify(userData.data));
+      localStorage.setItem("authToken", JSON.stringify(userData.authToken));
+      auth.login(userData.authToken, userData.data);
+      navigate("/");
+    }
   };
 
   return (

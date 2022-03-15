@@ -1,26 +1,48 @@
 import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 import Login from "../login/Login";
 import NavBar from "../navbar/NavBar";
 import SignUp from "../signup/SignUp";
 import Home from "../homepage/Home";
+import Logout from "../logout/Logout";
+import PrivateRoutes from "../private_routes/PrivateRoutes";
+import { AuthProvider } from "../authContext/AuthContext";
 
 import "./Layout.scss";
 
 const Layout = () => {
   return (
     <div>
-      <BrowserRouter>
-        <NavBar />
-        <div className="layout-container">
-          <Switch>
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/signup" component={SignUp} />
-            <Route exact path="/" component={Home} />
-          </Switch>
-        </div>
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <NavBar />
+          <div className="layout-container">
+            <Routes>
+              <Route exact path="signup" element={<SignUp />} />
+              <Route exact path="login" element={<Login />} />
+              <Route
+                exact
+                path="logout"
+                element={
+                  <PrivateRoutes>
+                    <Logout />
+                  </PrivateRoutes>
+                }
+              />
+              <Route
+                exact
+                path="/"
+                element={
+                  <PrivateRoutes>
+                    <Home />
+                  </PrivateRoutes>
+                }
+              />
+            </Routes>
+          </div>
+        </BrowserRouter>
+      </AuthProvider>
     </div>
   );
 };
