@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { loginUser } from "../api/auth_api";
 import { useAuth } from "../authContext/AuthContext";
@@ -12,16 +12,16 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const auth = useAuth();
-  console.log(auth);
+  const location = useLocation();
+
+  const redirectPath = location.state?.path || "/";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { data: userData } = await loginUser({ email, password });
     if (userData.authToken) {
-      localStorage.setItem("userData", JSON.stringify(userData.data));
-      localStorage.setItem("authToken", JSON.stringify(userData.authToken));
       auth.login(userData.authToken, userData.data);
-      navigate("/");
+      navigate(redirectPath, { replace: true });
     } else {
       alert("please enter correct details");
     }

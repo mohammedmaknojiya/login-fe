@@ -1,13 +1,13 @@
 import React from "react";
 import axios from "axios";
+import { useAuth } from "../authContext/AuthContext";
 
 const Home = () => {
+  const auth = useAuth();
   const getSchData = async () => {
-    const token = JSON.parse(localStorage.getItem("authToken"));
-
     const result = await axios.get("http://localhost:3001/sch/data", {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${auth.authToken}`,
       },
     });
     console.log(result);

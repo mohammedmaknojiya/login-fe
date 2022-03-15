@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import { useAuth } from "../authContext/AuthContext";
@@ -6,15 +6,7 @@ import { useAuth } from "../authContext/AuthContext";
 import "./NavBar.scss";
 
 const NavBar = () => {
-  // const [isLogin, setIsLogin] = useState(false);
   const auth = useAuth();
-
-  // useEffect(() => {
-  //   const authToken = localStorage.getItem("authToken");
-  //   if (authToken) {
-  //     setIsLogin(true);
-  //   }
-  // }, []);
 
   return (
     <div className="navbar-container">

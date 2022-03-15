@@ -17,10 +17,8 @@ const SignUp = () => {
     e.preventDefault();
     const { data: userData } = await signUpUser({ email, password });
     if (userData.authToken) {
-      localStorage.setItem("userData", JSON.stringify(userData.data));
-      localStorage.setItem("authToken", JSON.stringify(userData.authToken));
       auth.login(userData.authToken, userData.data);
-      navigate("/");
+      navigate("/", { replace: true });
     }
   };
 

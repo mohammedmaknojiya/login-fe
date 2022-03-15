@@ -6,9 +6,8 @@ import { useAuth } from "../authContext/AuthContext";
 const Logout = () => {
   const auth = useAuth();
   const navigate = useNavigate();
+
   const logoutUser = () => {
-    localStorage.removeItem("userData");
-    localStorage.removeItem("authToken");
     auth.logout();
     navigate("/login");
   };
